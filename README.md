@@ -15,3 +15,6 @@ If player hit one of them and don't have a shield, he dies.
 - Dynamic Obstacles - They will oscillate, turn or rotate in a loop
 ## Achievements
 The more player plays the game, the more achievement he completes, attracting the player even more to the game.
+## Enviroment
+The environment will change from time to time, player will not play a single place. rahter than textural changing, color change will be easier for me to automatize.
+I am now projecting to use a colorful fog to limit far vision, and some structures (like columns or any object) to decorate.
