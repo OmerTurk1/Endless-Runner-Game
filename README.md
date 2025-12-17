@@ -8,7 +8,10 @@ Main source for transaction(i will handle it later)
 - Magnet - attracts money to the player. has an effect of 15 seconds.
 - Shield - Adds an extra health. Taking multiple shields does not increase the health, max health can be 2.
 - Speeder - Player's +z velocity becomes 50 m/s for 10 seconds. increment and decrement will be gradient.
+- Coin Multipler - Gives x2 or x3 gain from laterly collected coins based on increment amount.
 ## Obstacles:
 If player hit one of them and don't have a shield, he dies.
-Static Obstacles - I have those assets in my previous unsuccessful project
-Dynamic Obstacles - They will oscillate, turn or rotate in a loop
+- Static Obstacles - I have those assets in my previous unsuccessful project
+- Dynamic Obstacles - They will oscillate, turn or rotate in a loop
+## Achievements
+The more player plays the game, the more achievement he completes, attracting the player even more to the game.
