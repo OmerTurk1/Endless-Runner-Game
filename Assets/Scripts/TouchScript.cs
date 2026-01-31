@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 public class TouchScript : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     private Vector2 startPos;
-    private Vector2 currentPos;
+    private Vector2 currentPos; // good
     public Vector2 delta;
     private bool isdragging;
     private float len;
