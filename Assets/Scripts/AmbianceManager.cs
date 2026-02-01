@@ -4,55 +4,61 @@ using System.Collections;
 public class AmbianceManager : MonoBehaviour
 {
     [Header("Zaman Ayarlarý")]
-    public float degisimSuresi;
-    public float gecisHizi;
+    public float waitingTime;
+    public float transitionTime;
 
     [Header("Renk Listesi")]
-    public Color[] atmosferRenkleri;
+    public Color[] selectedColor;
 
     private int currentIndex;
-    private Camera hedefKamera;
+    private Camera targetCam;
 
     void Start()
     {
-        currentIndex = Random.Range(0,atmosferRenkleri.Length);
-        hedefKamera = Camera.main;
+        currentIndex = 0;
+        targetCam = Camera.main;
 
-        if (atmosferRenkleri.Length > 0)
+        if (selectedColor.Length > 0)
         {
             RenderSettings.fog = true;
-            RenderSettings.fogColor = atmosferRenkleri[currentIndex];
-            hedefKamera.backgroundColor = atmosferRenkleri[currentIndex];
-            hedefKamera.clearFlags = CameraClearFlags.SolidColor;
+            changeColor(selectedColor[currentIndex]);
+            targetCam.clearFlags = CameraClearFlags.SolidColor;
 
-            StartCoroutine(AtmosferDongusu());
+            StartCoroutine(AmbianceLoop());
+        }
+        else
+        {
+            Debug.LogError("Atmosphere color amount cannot be zero!!!");
         }
     }
 
-    IEnumerator AtmosferDongusu()
+    IEnumerator AmbianceLoop()
     {
         while (true)
         {
-            yield return new WaitForSeconds(degisimSuresi);
+            yield return new WaitForSeconds(waitingTime);
 
-            int index_increase = Random.Range(1,atmosferRenkleri.Length - 1);
-            currentIndex = (currentIndex + index_increase) % atmosferRenkleri.Length;
+            currentIndex = (currentIndex + 1) % selectedColor.Length;
 
             float t = 0;
-            Color baslangicRengi = RenderSettings.fogColor;
-            Color hedefRenk = atmosferRenkleri[currentIndex];
+            Color startColor = RenderSettings.fogColor;
+            Color targetColor = selectedColor[currentIndex];
 
             while (t < 1f)
             {
-                t += Time.deltaTime * (1f / gecisHizi);
+                t += Time.deltaTime * (1f / transitionTime);
 
-                Color yeniRenk = Color.Lerp(baslangicRengi, hedefRenk, t);
+                Color newColor = Color.Lerp(startColor, targetColor, t);
 
-                RenderSettings.fogColor = yeniRenk;
-                hedefKamera.backgroundColor = yeniRenk;
+                changeColor(newColor);
 
                 yield return null;
             }
         }
+    }
+    private void changeColor(Color newColor)
+    {
+        RenderSettings.fogColor = newColor;
+        targetCam.backgroundColor = newColor;
     }
 }

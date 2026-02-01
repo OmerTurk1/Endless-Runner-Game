@@ -22,10 +22,10 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         touchScript = FindFirstObjectByType<TouchScript>();
         initial_forward_speed = 10f;
-        max_forward_speed = 50f;
-        forward_speed_increase = 4f;
+        max_forward_speed = 40f;
+        forward_speed_increase = 5f;
         forward_speed = initial_forward_speed;
-        time_per_speedup = 10f;
+        time_per_speedup = 45f;
         time_checker();
     }
     void FixedUpdate()
