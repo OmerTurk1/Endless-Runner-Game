@@ -13,7 +13,7 @@ public class TouchScript : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         isdragging = false;
         RectTransform rect = GetComponent<RectTransform>();
         Vector2 size = rect.rect.size;
-        len = size.x < size.y ? size.x : size.y; // küçük olaný al
+        len = size.x < size.y ? size.x : size.y; // take smaller one
     }
     public void OnPointerDown(PointerEventData eventData)
     {
