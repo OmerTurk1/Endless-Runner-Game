@@ -10,6 +10,7 @@ public class TouchScript : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     private float len;
     private void Start()
     {
+        isdragging = false;
         RectTransform rect = GetComponent<RectTransform>();
         Vector2 size = rect.rect.size;
         len = size.x < size.y ? size.x : size.y; // küçük olaný al
@@ -17,11 +18,13 @@ public class TouchScript : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     public void OnPointerDown(PointerEventData eventData)
     {
         startPos = eventData.position;
+        currentPos = eventData.position;
         isdragging = true;
     }
     public void OnDrag(PointerEventData eventData)
     {
-        currentPos = eventData.position;    }
+        currentPos = eventData.position;    
+    }
     public void OnPointerUp(PointerEventData eventData)
     {
         isdragging = false;
@@ -30,9 +33,12 @@ public class TouchScript : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     private void Update()
     {
         if (!isdragging)
+        {
+            delta = Vector2.zero;
             return;
+        }
 
         delta = (currentPos - startPos)/len;
-        if (delta.sqrMagnitude < 0.005) delta = Vector2.zero;
+        if (delta.sqrMagnitude < 0.002f) delta = Vector2.zero;
     }
 }

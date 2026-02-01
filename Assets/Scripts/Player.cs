@@ -31,9 +31,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         forward_speed = math.min(forward_speed, max_forward_speed);
-        Vector2 direction = touchScript.delta;
         inputDelta = touchScript.delta * sensitivity;
-
         rb.linearVelocity = new Vector3(inputDelta.x, inputDelta.y, forward_speed);
     }
     public void time_checker()
