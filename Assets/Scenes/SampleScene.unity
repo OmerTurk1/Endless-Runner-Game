@@ -14,8 +14,8 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 1, g: 1, b: 1, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
   m_LinearFogStart: 0
@@ -244,8 +244,8 @@ Camera:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -717,8 +717,8 @@ GameObject:
   - component: {fileID: 1176660524}
   - component: {fileID: 1176660525}
   m_Layer: 0
-  m_Name: Sphere
-  m_TagString: Untagged
+  m_Name: Player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -866,6 +866,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1388086879}
   - component: {fileID: 1388086878}
+  - component: {fileID: 1388086880}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -885,17 +886,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2dad7e0a7cb30047a2b19ab87342bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapCreator
-  obstacles:
+  obstaclePrefabs:
   - {fileID: 9162000545644793818, guid: 81dea489338760a4f82731b0882fdf0e, type: 3}
   - {fileID: 8659183034161226305, guid: 27998dbd576fe78439b9c210d1d8606d, type: 3}
   - {fileID: 7780266627968729639, guid: 337859ec89d2bfd41b299fafcf136f63, type: 3}
   - {fileID: 8885326047785845478, guid: 0ac73e26db4ac62419cd3c90464aeaa2, type: 3}
   - {fileID: 5806405655609637000, guid: 4fe97443877da034c889b728a1887254, type: 3}
-  distance_between_obstacles: 15
-  initial_row_num: 30
-  obstacle_per_row: 2
-  additional_row_num: 0
-  additional_row_time: 0
+  poolSizePerType: 20
+  initial_distance: 30
+  distance_between_rows: 10
+  distance_inside_row: 4
+  obstacle_per_row: 3
   bound_left: -10
   bound_right: 10
   bound_top: 10
@@ -915,6 +916,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1388086880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388086877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebd7902a213bcd945bede84a93c810df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AmbianceManager
+  degisimSuresi: 20
+  gecisHizi: 2
+  atmosferRenkleri:
+  - {r: 1, g: 1, b: 1, a: 0}
+  - {r: 0.13597153, g: 0.71227795, b: 0.78616345, a: 0}
+  - {r: 0.8616352, g: 0.7835936, b: 0.27366394, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0.11514569, g: 0.8930817, b: 0.32903534, a: 0}
+  - {r: 0.8013928, g: 0.11372548, b: 0.89411765, a: 0}
+  - {r: 0.42138356, g: 0.42138356, b: 0.42138356, a: 0}
+  - {r: 0.7798742, g: 0.39312625, b: 0.12507404, a: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
