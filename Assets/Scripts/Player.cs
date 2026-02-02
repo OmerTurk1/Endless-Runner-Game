@@ -6,13 +6,13 @@ using System;
 public class Player : MonoBehaviour
 {
     // Related to Speed
-    private float forward_speed;
-    private float max_forward_speed;
-    private float initial_forward_speed;
-    private float forward_speed_increase;
-    private float forward_speed_increase_time;
+    public float forward_speed;
+    public float max_forward_speed;
+    public float initial_forward_speed;
+    public float forward_speed_increase;
+    public float forward_speed_increase_time;
     private Rigidbody rb;
-    private float time_per_speedup; // increase the speed once this much time is spent
+    public float time_per_speedup; // increase the speed once this much time is spent
 
     // Related to Touch
     private TouchScript touchScript;
@@ -24,20 +24,18 @@ public class Player : MonoBehaviour
 
     // Related to Camera
     private Camera mainCamera;
-    private float fov_increase;
+    public float fov_increase;
+
+    // Related to Money
+    public int money;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         touchScript = FindFirstObjectByType<TouchScript>();
         dieManager = FindFirstObjectByType<DieManager>();
         mainCamera = Camera.main;
-        initial_forward_speed = 8f;
-        max_forward_speed = 33f;
-        forward_speed_increase = 5f;
         forward_speed = initial_forward_speed;
-        time_per_speedup = 45f;
-        fov_increase = 10;
-        forward_speed_increase_time = 1.5f;
+        money = 0;
 
         time_checker();
     }
@@ -87,6 +85,13 @@ public class Player : MonoBehaviour
         {
             Debug.Log("You died!");
             dieManager.gameOver();
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.CompareTag("Coin"))
+        {
+            money++;
         }
     }
 }

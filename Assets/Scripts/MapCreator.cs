@@ -107,11 +107,9 @@ public class MapCreator : MonoBehaviour
         }
         if (index == next_row_for_coin) // coin
         {
-            Debug.Log("coin yapýlýyor!!!");
             GameObject coin = GetCoinFromPool();
             if(coin != null)
             {
-                Debug.Log("coin oluþturuldu!");
                 Vector3 location = new Vector3(
                     Random.Range(bound_left, bound_right),
                     Random.Range(bound_bottom, bound_top),

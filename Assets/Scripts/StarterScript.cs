@@ -8,6 +8,7 @@ public class StarterScript : MonoBehaviour
     public GameObject continueGameTimer;
     private void Start()
     {
+        Time.timeScale = 1;
         gameScreen.SetActive(true);
         pauseScreen.SetActive(false);
         gameOverScreen.SetActive(false);
