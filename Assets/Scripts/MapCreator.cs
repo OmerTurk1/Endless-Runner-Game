@@ -3,10 +3,18 @@ using System.Collections.Generic;
 
 public class MapCreator : MonoBehaviour
 {
+    [Header("Coin Prefabs")]
+    public GameObject coinPrefab;
+    public int coinPoolSize;
+    public int howManyRowPerCoin;
+    public int coinPlacementDeviation;
+    private List<GameObject> coinPool = new List<GameObject>();
+    private int next_row_for_coin;
+
     [Header("Obstacle Prefabs")]
     public GameObject[] obstaclePrefabs;
 
-    [Header("Pool Settings")]
+    [Header("Obstacle Pool Settings")]
     public int poolSizePerType;
     private List<GameObject> obstaclePool = new List<GameObject>();
 
@@ -16,21 +24,25 @@ public class MapCreator : MonoBehaviour
     public float distance_inside_row;
     public int obstacle_per_row;
 
-    [Header("Obstacle Boundaries")]
+    [Header("Map Boundaries")]
     public float bound_left;
     public float bound_right;
     public float bound_top;
     public float bound_bottom;
 
     private float z_distance;
+    private int index;
 
     private void Start()
     {
+        next_row_for_coin = howManyRowPerCoin + Random.Range(-coinPlacementDeviation, coinPlacementDeviation);
+
         InitializePool();
         z_distance = initial_distance;
+        index = 1;
 
         int initial_row_num = (int)(0.8f * obstaclePool.Count / obstacle_per_row);
-        for (int i = 1; i <= initial_row_num; i++)
+        while (index <= initial_row_num)
         {
             createRow();
         }
@@ -68,14 +80,19 @@ public class MapCreator : MonoBehaviour
                 obstaclePool.Add(obj);
             }
         }
+        for (int i = 0; i < coinPoolSize; i++)
+        {
+            GameObject obj = Instantiate(coinPrefab);
+            obj.SetActive(false);
+            coinPool.Add(obj);
+        }
     }
 
     public void createRow()
     {
-        z_distance += distance_between_rows;
-        for (int j = 0; j < obstacle_per_row; j++)
+        for (int j = 0; j < obstacle_per_row; j++) // obstacle
         {
-            GameObject obstacle = GetObjectFromPool();
+            GameObject obstacle = GetObstacleFromPool();
             if (obstacle != null)
             {
                 Vector3 location = new Vector3(
@@ -88,8 +105,32 @@ public class MapCreator : MonoBehaviour
                 obstacle.SetActive(true);
             }
         }
+        if (index == next_row_for_coin) // coin
+        {
+            Debug.Log("coin yapýlýyor!!!");
+            GameObject coin = GetCoinFromPool();
+            if(coin != null)
+            {
+                Debug.Log("coin oluþturuldu!");
+                Vector3 location = new Vector3(
+                    Random.Range(bound_left, bound_right),
+                    Random.Range(bound_bottom, bound_top),
+                    z_distance + Random.Range(-distance_inside_row, distance_inside_row)
+                );
+                coin.transform.position = location;
+                coin.SetActive(true);
+                next_row_for_coin += howManyRowPerCoin + Random.Range(-coinPlacementDeviation, coinPlacementDeviation);
+            }
+            else
+            {
+                next_row_for_coin++;
+            }
+        }
+
+        z_distance += distance_between_rows;
+        index++;
     }
-    GameObject GetObjectFromPool()
+    GameObject GetObstacleFromPool()
     {
         int randomIndex = Random.Range(0, obstaclePool.Count);
         for (int i = 0; i < obstaclePool.Count; i++)
@@ -98,6 +139,18 @@ public class MapCreator : MonoBehaviour
             if (!obstaclePool[index].activeInHierarchy)
             {
                 return obstaclePool[index];
+            }
+        }
+        return null;
+    }
+    GameObject GetCoinFromPool()
+    {
+        int randomIndex = Random.Range(0, coinPool.Count);
+        for (int i = 0; i < coinPool.Count; i++)
+        {
+            if (!coinPool[i].activeInHierarchy)
+            {
+                return coinPool[i];
             }
         }
         return null;

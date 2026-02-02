@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ObstacleDeactivator : MonoBehaviour
+public class ObjectDeactivator : MonoBehaviour
 {
     private Transform playerTransform;
     public float distanceToDisable = 5f; // threshold for disable

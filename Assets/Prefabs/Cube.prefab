@@ -319,4 +319,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f0f7bac6e7850d49830c0b83b6963d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleDeactivator
-  distanceToDisable: 15
+  distanceToDisable: 5
