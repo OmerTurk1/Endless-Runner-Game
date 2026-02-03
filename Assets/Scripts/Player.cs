@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
 
     // Related to death
     private DieManager dieManager;
+    public bool isDeath;
 
     // Related to Camera
     private Camera mainCamera;
@@ -36,12 +37,13 @@ public class Player : MonoBehaviour
         mainCamera = Camera.main;
         forward_speed = initial_forward_speed;
         money = 0;
-
+        isDeath = false;
         time_checker();
     }
     void FixedUpdate()
     {
-        inputDelta = touchScript.delta * sensitivity;
+        inputDelta = isDeath ? Vector2.zero : touchScript.delta * sensitivity;
+        // inputDelta = touchScript.delta * sensitivity;
         rb.linearVelocity = new Vector3(inputDelta.x, inputDelta.y, forward_speed);
     }
     public void time_checker()
@@ -83,8 +85,11 @@ public class Player : MonoBehaviour
     {
         if (collision.transform.CompareTag("Obstacle") || collision.transform.parent.CompareTag("Obstacle")) //because of multiple child colliders
         {
+            string explanation = "You hit an obstacle.";
             Debug.Log("You died!");
-            dieManager.gameOver();
+            isDeath = true;
+            forward_speed = 0;
+            dieManager.gameOver(explanation);
         }
     }
     private void OnTriggerEnter(Collider other)
