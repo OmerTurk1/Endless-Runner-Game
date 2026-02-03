@@ -15,6 +15,6 @@ public class UIManager : MonoBehaviour
     }
     private void Update()
     {
-        coinText.text = PermanentInfo.coin.ToString();
+        coinText.text = PermanentInfo.Coin.ToString();
     }
 }

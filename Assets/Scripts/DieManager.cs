@@ -1,6 +1,5 @@
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,19 +10,23 @@ public class DieManager : MonoBehaviour
     public GameObject gameScreen;
     public TextMeshProUGUI distanceText;
     public TextMeshProUGUI coinText;
+    public TextMeshProUGUI totalGainText;
     public TextMeshProUGUI explanationText;
     public Material youDieScreenMaterial;
     public float darkingTime;
+    public float distancePerCoin;
     public void gameOver(string explanation)
     {
         // perform animation
-        int distance = ((int)player.transform.position.z);
+        int distance = (int)player.transform.position.z;
         distanceText.text = distance.ToString() + " m";
 
         int coin_collected = player.GetComponent<Player>().money;
         coinText.text = "x" + coin_collected.ToString();
 
-        PermanentInfo.coin += coin_collected;
+        int total_gain = coin_collected + (int)(distance / distancePerCoin);
+        totalGainText.text = "x "+total_gain.ToString();
+        PermanentInfo.Coin += total_gain;
 
         explanationText.text = explanation;
 
