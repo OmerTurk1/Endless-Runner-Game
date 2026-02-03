@@ -19,8 +19,14 @@ public class DieManager : MonoBehaviour
         // perform animation
         int distance = ((int)player.transform.position.z);
         distanceText.text = distance.ToString() + " m";
-        coinText.text = "x" + player.GetComponent<Player>().money.ToString();
+
+        int coin_collected = player.GetComponent<Player>().money;
+        coinText.text = "x" + coin_collected.ToString();
+
+        PermanentInfo.coin += coin_collected;
+
         explanationText.text = explanation;
+
         gameScreen.SetActive(false);
         gameOverScreen.SetActive(true);
         StartCoroutine(darkerTimer());
@@ -58,6 +64,7 @@ public class DieManager : MonoBehaviour
     }
     public void mainMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MainScene");
     }
 }

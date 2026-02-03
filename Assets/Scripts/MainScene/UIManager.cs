@@ -1,8 +1,10 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Buttonmanager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
+    public TextMeshProUGUI coinText;
     public void startGame()
     {
         SceneManager.LoadScene("GameScene");
@@ -10,5 +12,9 @@ public class Buttonmanager : MonoBehaviour
     public void quitGame()
     {
         Application.Quit();
+    }
+    private void Update()
+    {
+        coinText.text = PermanentInfo.coin.ToString();
     }
 }

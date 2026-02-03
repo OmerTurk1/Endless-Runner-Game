@@ -17,6 +17,8 @@ public class TitleColorChanger : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(waitTime);
+
             Color startColor = title_1.color;
             Color endColor = Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
 
@@ -33,8 +35,6 @@ public class TitleColorChanger : MonoBehaviour
             }
 
             title_1.color = endColor;
-
-            yield return new WaitForSeconds(waitTime);
         }
     }
 }

@@ -6,6 +6,7 @@ public class StarterScript : MonoBehaviour
     public GameObject gameScreen;
     public GameObject pauseScreen;
     public GameObject gameOverScreen;
+    public GameObject youSureScreen;
     public GameObject continueGameTimer;
     private void Start()
     {
@@ -14,6 +15,7 @@ public class StarterScript : MonoBehaviour
         gameScreen.SetActive(true);
         pauseScreen.SetActive(false);
         gameOverScreen.SetActive(false);
+        youSureScreen.SetActive(false);
         continueGameTimer.SetActive(false);
     }
 }

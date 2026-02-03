@@ -6,6 +6,7 @@ public class PauseandContinue : MonoBehaviour
 {
     public GameObject GameScreen;
     public GameObject PauseScreen;
+    public GameObject youSureScreen;
     public float waittime;
     public TextMeshProUGUI waittimetext;
     public GameObject waittimeobject;
@@ -41,5 +42,13 @@ public class PauseandContinue : MonoBehaviour
 
         Time.timeScale = 1f;
         Debug.Log("Game continues.");
+    }
+    public void returnGame()
+    {
+        youSureScreen.SetActive(false);
+    }
+    public void openYouSureScreen()
+    {
+        youSureScreen.SetActive(true);
     }
 }
