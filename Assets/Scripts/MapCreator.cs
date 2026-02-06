@@ -27,6 +27,7 @@ public class MapCreator : MonoBehaviour
     [Header("Column Pool Settings")]
     public GameObject[] columnPrefabs;
     public int columnPoolSizePerType;
+    public int columnTourAmount;
     public int outlierDistanceOfColumns;
     public int columnStartLength; // distance between two column sections
     private int columnRowLength; // how many rows to add the columns
@@ -149,7 +150,7 @@ public class MapCreator : MonoBehaviour
         }
         if(index >= column_start_index)
         {
-            if(index <= column_start_index + columnRowLength - 1)
+            if(index <= column_start_index + columnRowLength * columnTourAmount - 1)
             {
                 (GameObject left_column, GameObject right_column) = GetColumnsFromPool();
                 Vector3 left_location = new Vector3(
@@ -170,8 +171,7 @@ public class MapCreator : MonoBehaviour
             }
             else
             {
-                column_start_index += columnStartLength + columnRowLength;
-                column_prefab_index = 0;
+                column_start_index += columnStartLength + columnRowLength * columnTourAmount;
             }
         }
 
@@ -227,7 +227,7 @@ public class MapCreator : MonoBehaviour
                 }
             }
         }
-        column_prefab_index++;
+        column_prefab_index = (column_prefab_index + 1) % columnPrefabs.Length;
         return (left, right);
     }
 }

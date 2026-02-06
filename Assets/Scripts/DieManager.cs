@@ -15,8 +15,12 @@ public class DieManager : MonoBehaviour
     public Material youDieScreenMaterial;
     public float darkingTime;
     public float distancePerCoin;
+    private bool isDead = false;
     public void gameOver(string explanation)
     {
+        if (isDead)
+            return;
+        isDead = true;
         player.GetComponent<Player>().forward_speed = 0f;
         // perform animation
         int distance = (int)player.transform.position.z;

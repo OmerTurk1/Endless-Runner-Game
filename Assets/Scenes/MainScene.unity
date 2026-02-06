@@ -685,10 +685,21 @@ MonoBehaviour:
   distance_between_rows: 12
   distance_inside_row: 8
   obstacle_per_row: 4
-  bound_left: -10
-  bound_right: 10
-  bound_top: 10
-  bound_bottom: -10
+  columnPrefabs:
+  - {fileID: 2680054401243949402, guid: b5f9389f04d282b4683f9bbeee9467e4, type: 3}
+  - {fileID: 2364017082255298363, guid: 2255600b1b87e664eabf58336e34e071, type: 3}
+  - {fileID: 8492708412020799091, guid: d4e67050c192f7c4ba133b31d090e65c, type: 3}
+  - {fileID: 273486526956993977, guid: 486fafbbea90b8049b91a57b3f9d4967, type: 3}
+  - {fileID: 2847720233788568102, guid: da2778b95e7459c49a0ea554f5a66f8e, type: 3}
+  - {fileID: 2750322913225358798, guid: 6640ba60286a0d3429aef09a505675c5, type: 3}
+  columnPoolSizePerType: 10
+  columnTourAmount: 3
+  outlierDistanceOfColumns: 5
+  columnStartLength: 6
+  bound_left: -12
+  bound_right: 12
+  bound_top: 8
+  bound_bottom: -8
 --- !u!4 &775701553
 Transform:
   m_ObjectHideFlags: 0
@@ -1953,5 +1964,5 @@ SceneRoots:
   - {fileID: 1963544074}
   - {fileID: 1826030326}
   - {fileID: 444723271}
-  - {fileID: 775701553}
   - {fileID: 575211107}
+  - {fileID: 775701553}

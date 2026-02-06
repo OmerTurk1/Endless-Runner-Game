@@ -3619,9 +3619,9 @@ MonoBehaviour:
   - {fileID: 8885326047785845478, guid: 0ac73e26db4ac62419cd3c90464aeaa2, type: 3}
   - {fileID: 5806405655609637000, guid: 4fe97443877da034c889b728a1887254, type: 3}
   poolSizePerType: 20
-  initial_distance: 24
+  initial_distance: 30
   distance_between_rows: 12
-  distance_inside_row: 8
+  distance_inside_row: 6
   obstacle_per_row: 4
   columnPrefabs:
   - {fileID: 2680054401243949402, guid: b5f9389f04d282b4683f9bbeee9467e4, type: 3}
@@ -3631,6 +3631,7 @@ MonoBehaviour:
   - {fileID: 2847720233788568102, guid: da2778b95e7459c49a0ea554f5a66f8e, type: 3}
   - {fileID: 2750322913225358798, guid: 6640ba60286a0d3429aef09a505675c5, type: 3}
   columnPoolSizePerType: 10
+  columnTourAmount: 3
   outlierDistanceOfColumns: 5
   columnStartLength: 6
   bound_left: -12
