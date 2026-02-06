@@ -17,6 +17,7 @@ public class DieManager : MonoBehaviour
     public float distancePerCoin;
     public void gameOver(string explanation)
     {
+        player.GetComponent<Player>().forward_speed = 0f;
         // perform animation
         int distance = (int)player.transform.position.z;
         distanceText.text = distance.ToString() + " m";
@@ -25,7 +26,7 @@ public class DieManager : MonoBehaviour
         coinText.text = "x" + coin_collected.ToString();
 
         int total_gain = coin_collected + (int)(distance / distancePerCoin);
-        totalGainText.text = "x "+total_gain.ToString();
+        totalGainText.text = "x"+total_gain.ToString();
         PermanentInfo.Coin += total_gain;
 
         explanationText.text = explanation;

@@ -88,7 +88,6 @@ public class Player : MonoBehaviour
             string explanation = "You hit an obstacle.";
             Debug.Log("You died!");
             isDeath = true;
-            forward_speed = 0;
             dieManager.gameOver(explanation);
         }
     }

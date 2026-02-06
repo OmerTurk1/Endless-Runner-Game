@@ -19,7 +19,7 @@ public class PermanentInfo : MonoBehaviour
     static void InitializeAtStart()
     {
         // PlayerPrefs'ten veriyi sadece oyun ilk açýldýðýnda çekiyoruz
-        Coin = PlayerPrefs.GetInt("TotalCoin", 0); ;
+        Coin = PlayerPrefs.GetInt("TotalCoin", 0);
         Debug.Log("Oyun ilk kez açýldý. Hafýzadaki coin: " + Coin);
     }
     public void saveGame()
