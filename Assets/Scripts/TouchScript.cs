@@ -37,7 +37,6 @@ public class TouchScript : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             delta = Vector2.zero;
             return;
         }
-
         delta = (currentPos - startPos)/len;
     }
 }

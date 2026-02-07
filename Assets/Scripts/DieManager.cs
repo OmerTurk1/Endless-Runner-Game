@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class DieManager : MonoBehaviour
 {
+    [Header("General Settings")]
     public GameObject player;
     public GameObject gameOverScreen;
     public GameObject gameScreen;
@@ -15,22 +16,44 @@ public class DieManager : MonoBehaviour
     public Material youDieScreenMaterial;
     public float darkingTime;
     public float distancePerCoin;
+
+    [Header("Highest Score Settings")]
+    public GameObject isHighestScoreDistanceText;
+    public GameObject isHighestScoreCoinText;
+    public GameObject isHighestScoreTotalText;
+
     private bool isDead = false;
     public void gameOver(string explanation)
     {
         if (isDead)
             return;
+        Debug.Log("You died");
         isDead = true;
         player.GetComponent<Player>().forward_speed = 0f;
-        // perform animation
+
         int distance = (int)player.transform.position.z;
         distanceText.text = distance.ToString() + " m";
+        if(distance > PermanentInfo.HighestScoreDistance)
+        {
+            isHighestScoreDistanceText.SetActive(true);
+            PermanentInfo.HighestScoreDistance = distance;
+        }
 
         int coin_collected = player.GetComponent<Player>().money;
         coinText.text = "x" + coin_collected.ToString();
+        if (coin_collected > PermanentInfo.HighestScoreCoin)
+        {
+            isHighestScoreCoinText.SetActive(true);
+            PermanentInfo.HighestScoreCoin = coin_collected;
+        }
 
         int total_gain = coin_collected + (int)(distance / distancePerCoin);
         totalGainText.text = "x"+total_gain.ToString();
+        if (total_gain > PermanentInfo.HighestScoreTotal)
+        {
+            isHighestScoreTotalText.SetActive(true);
+            PermanentInfo.HighestScoreTotal = total_gain;
+        }
         PermanentInfo.Coin += total_gain;
 
         explanationText.text = explanation;

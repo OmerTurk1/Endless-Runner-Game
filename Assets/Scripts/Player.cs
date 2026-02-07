@@ -2,9 +2,11 @@ using Unity.Mathematics;
 using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    [Header("Speed Settings")]
     // Related to Speed
     public float forward_speed;
     public float max_forward_speed;
@@ -21,14 +23,25 @@ public class Player : MonoBehaviour
 
     // Related to death
     private DieManager dieManager;
-    public bool isDeath;
+    private bool isDeath = false;
 
     // Related to Camera
     private Camera mainCamera;
     public float fov_increase;
 
     // Related to Money
-    public int money;
+    public int money = 0;
+
+    [Header("Magnet Settings")]
+    // Related to Magnet
+    public float magnetRadius;
+    public float magnetStrength;
+    private bool is_magnet_active = false;
+    private float magnet_timer = 0f;
+    public float magnetDuration;
+    public GameObject magnetImageObject;
+    public Image magnetImage;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -36,8 +49,7 @@ public class Player : MonoBehaviour
         dieManager = FindFirstObjectByType<DieManager>();
         mainCamera = Camera.main;
         forward_speed = initial_forward_speed;
-        money = 0;
-        isDeath = false;
+        magnet_timer = magnetDuration;
         time_checker();
     }
     void FixedUpdate()
@@ -81,12 +93,55 @@ public class Player : MonoBehaviour
             Debug.Log("Speed increased to: " + forward_speed);
         }
     }
+    void Update()
+    {
+        if (is_magnet_active)
+        {
+            magnetImageObject.SetActive(true);
+            MagnetEffect();
+
+            // Süre yönetimi
+            magnet_timer -= Time.deltaTime;
+            magnetImage.fillAmount = magnet_timer / magnetDuration;
+            if (magnet_timer <= 0) 
+            {
+                is_magnet_active = false;
+                magnet_timer = magnetDuration;
+            }
+        }
+        else
+        {
+            magnetImageObject.SetActive(false);
+        }
+    }
+    void MagnetEffect()
+    {
+        // Oyuncunun etrafýndaki tüm collider'larý bul
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, magnetRadius);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Coin"))
+            {
+                // Parayý oyuncuya doðru hareket ettir
+                hitCollider.transform.position = Vector3.MoveTowards(
+                    hitCollider.transform.position,
+                    transform.position,
+                    magnetStrength * Time.deltaTime
+                );
+            }
+        }
+    }
+    void StartMagnet()
+    {
+        is_magnet_active = true;
+        magnet_timer = magnetDuration; // Her yeni mýknatýs alýþta süreyi tazeler
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.CompareTag("Obstacle") || collision.transform.parent.CompareTag("Obstacle")) //because of multiple child colliders
         {
             string explanation = "You hit an obstacle.";
-            Debug.Log("You died!");
             isDeath = true;
             dieManager.gameOver(explanation);
         }
@@ -96,6 +151,10 @@ public class Player : MonoBehaviour
         if (other.transform.CompareTag("Coin"))
         {
             money++;
+        }
+        else if (other.CompareTag("Magnet"))
+        {
+            StartMagnet();
         }
     }
 }

@@ -3,13 +3,22 @@ using System.Collections.Generic;
 
 public class MapCreator : MonoBehaviour
 {
-    [Header("Coin Prefabs")]
+    [Header("Coin Prefabs & Settings")]
     public GameObject coinPrefab;
     public int coinPoolSize;
     public int howManyRowPerCoin;
     public int coinPlacementDeviation;
     private List<GameObject> coinPool = new List<GameObject>();
     private int next_row_for_coin;
+
+    [Header("Magnet Prefabs & Settings")]
+    public GameObject magnetPrefab;
+    public int magnetPoolSize;
+    public int howManyRowPerMagnet;
+    public int rowForFirstMagnet;
+    public int magnetPlacementDeviation;
+    private List<GameObject> magnetPool = new List<GameObject>();
+    private int next_row_for_magnet;
 
     [Header("Obstacle Prefabs")]
     public GameObject[] obstaclePrefabs;
@@ -24,7 +33,7 @@ public class MapCreator : MonoBehaviour
     public float distance_inside_row;
     public int obstacle_per_row;
 
-    [Header("Column Pool Settings")]
+    [Header("Column Prefabs & Settings")]
     public GameObject[] columnPrefabs;
     public int columnPoolSizePerType;
     public int columnTourAmount;
@@ -47,6 +56,7 @@ public class MapCreator : MonoBehaviour
     private void Start()
     {
         next_row_for_coin = howManyRowPerCoin + Random.Range(-coinPlacementDeviation, coinPlacementDeviation);
+        next_row_for_magnet = rowForFirstMagnet;
 
         columnRowLength = columnPrefabs.Length;
         column_start_index = columnStartLength + 1;
@@ -110,6 +120,12 @@ public class MapCreator : MonoBehaviour
                 columnPool.Add(obj);
             }
         }
+        for (int i = 0; i < magnetPoolSize; i++)
+        {
+            GameObject obj = Instantiate(magnetPrefab);
+            obj.SetActive(false);
+            magnetPool.Add(obj);
+        }
     }
 
     public void createRow()
@@ -148,7 +164,7 @@ public class MapCreator : MonoBehaviour
                 next_row_for_coin++;
             }
         }
-        if(index >= column_start_index)
+        if(index >= column_start_index) // column
         {
             if(index <= column_start_index + columnRowLength * columnTourAmount - 1)
             {
@@ -174,6 +190,25 @@ public class MapCreator : MonoBehaviour
                 column_start_index += columnStartLength + columnRowLength * columnTourAmount;
             }
         }
+        if (index == next_row_for_magnet) // magnet
+        {
+            GameObject magnet = GetMagnetFromPool();
+            if (magnet != null)
+            {
+                Vector3 location = new Vector3(
+                    Random.Range(bound_left, bound_right),
+                    Random.Range(bound_bottom, bound_top),
+                    z_distance + Random.Range(-distance_inside_row, distance_inside_row)
+                );
+                magnet.transform.position = location;
+                magnet.SetActive(true);
+                next_row_for_magnet += howManyRowPerMagnet + Random.Range(-magnetPlacementDeviation, magnetPlacementDeviation);
+            }
+            else
+            {
+                next_row_for_magnet++;
+            }
+        }
 
         z_distance += distance_between_rows;
         index++;
@@ -193,7 +228,6 @@ public class MapCreator : MonoBehaviour
     }
     GameObject GetCoinFromPool()
     {
-        int randomIndex = Random.Range(0, coinPool.Count);
         for (int i = 0; i < coinPool.Count; i++)
         {
             if (!coinPool[i].activeInHierarchy)
@@ -207,8 +241,6 @@ public class MapCreator : MonoBehaviour
     {
         GameObject left = null;
         GameObject right = null;
-
-        Debug.Log("prefab index: " + column_prefab_index);
         GameObject targetPrefab = columnPrefabs[column_prefab_index];
 
         // Iterate through the pool to find inactive objects matching the prefab
@@ -229,5 +261,16 @@ public class MapCreator : MonoBehaviour
         }
         column_prefab_index = (column_prefab_index + 1) % columnPrefabs.Length;
         return (left, right);
+    }
+    GameObject GetMagnetFromPool()
+    {
+        for (int i = 0; i < magnetPool.Count; i++)
+        {
+            if (!magnetPool[i].activeInHierarchy)
+            {
+                return magnetPool[i];
+            }
+        }
+        return null;
     }
 }

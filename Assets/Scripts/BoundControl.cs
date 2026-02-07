@@ -10,6 +10,8 @@ public class BoundControl : MonoBehaviour
     public GameObject damageScreen;
     public Material damageScreenMaterial;
 
+    public float horizontalAllowDistance;
+    public float verticalAllowDistance;
     public float allowTime; // total allowed time outside
     private float currentTime;    // remained time
 
@@ -22,10 +24,10 @@ public class BoundControl : MonoBehaviour
         currentTime = allowTime;
 
         // take bounds
-        bound_left = mapCreator.bound_left;
-        bound_right = mapCreator.bound_right;
-        bound_bottom = mapCreator.bound_bottom;
-        bound_top = mapCreator.bound_top;
+        bound_left = mapCreator.bound_left - horizontalAllowDistance;
+        bound_right = mapCreator.bound_right + horizontalAllowDistance;
+        bound_bottom = mapCreator.bound_bottom - verticalAllowDistance;
+        bound_top = mapCreator.bound_top + verticalAllowDistance;
     }
 
     void Update()
@@ -68,7 +70,6 @@ public class BoundControl : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("You died");
         string explanation = "You stayed on restricted are for too long";
         dieManager.gameOver(explanation);
     }
