@@ -151,9 +151,11 @@ public class Player : MonoBehaviour
         if (other.transform.CompareTag("Coin"))
         {
             money++;
+            other.gameObject.SetActive(false);
         }
         else if (other.CompareTag("Magnet"))
         {
+            other.gameObject.SetActive(false);
             StartMagnet();
         }
     }

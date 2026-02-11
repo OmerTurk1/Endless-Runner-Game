@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PermanentInfo : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class PermanentInfo : MonoBehaviour
     private static int highest_score_distance;
     private static int highest_score_coin;
     private static int highest_score_total;
+    private static string gameMode; // First Person, Third Person
     public static int Coin
     {
         get
@@ -54,6 +56,18 @@ public class PermanentInfo : MonoBehaviour
             PlayerPrefs.SetInt("HighestScoreTotal", highest_score_total);
         }
     }
+    public static string GameMode
+    {
+        get
+        {
+            return gameMode;
+        }
+        set
+        {
+            gameMode = value;
+            PlayerPrefs.SetString("GameMode", gameMode);
+        }
+    }
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void InitializeAtStart()
     {
@@ -62,5 +76,6 @@ public class PermanentInfo : MonoBehaviour
         HighestScoreDistance = PlayerPrefs.GetInt("HighestScoreDistance", 0);
         HighestScoreCoin = PlayerPrefs.GetInt("HighestScoreCoin", 0);
         HighestScoreTotal = PlayerPrefs.GetInt("HighestScoreTotal", 0);
+        GameMode = PlayerPrefs.GetString("GameMode", "First Person");
     }
 }
